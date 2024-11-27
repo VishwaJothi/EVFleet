@@ -1,0 +1,870 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    color: #4bc0c0; /* Light teal color */
+    text-align: center;
+}
+
+a {
+    color: #4bc0c0; /* Light teal color */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #4bc0c0; /* Navbar teal color */
+    color: white;
+    padding: 15px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px; /* Space below navbar */
+}
+
+.navbar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-left a {
+    color: white; /* Icon color */
+    padding: 10px; /* Spacing around icons */
+    font-size: 20px; /* Adjust size if necessary */
+}
+
+.navbar-left a:hover {
+    color: #d1f5f4; /* Lighter teal on hover */
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.button {
+    background-color: white;
+    color: #4bc0c0; /* Button text color */
+    border: none;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin-left: 20px;
+}
+
+.button:hover {
+    background-color: #e6f7f7; /* Light teal background on hover */
+}
+
+.username {
+    font-size: 24px; /* Increase font size */
+    font-weight: bold; /* Make it bold */
+    color: #ffffff; /* White color for contrast */
+    padding: 10px 15px; /* Add padding for a better appearance */
+    margin-right: 20px; /* Space between username and logout button */
+    /* Center the username */
+    padding-left: 500px;
+}
+    /* max-width: 400px;
+    margin: auto;
+} */
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px -10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="submit"] {
+    background-color: #4bc0c0; /* Teal color */
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+input[type="submit"]:hover {
+    background-color: #36a7a5; /* Darker teal on hover */
+}
+
+/* Page Styles */
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+#man_container {
+    /* max-width: 900px; */
+    /* margin: auto; */
+    margin-left: 150px;
+    margin-right: 75px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Alerts */
+.alert {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid transparent;
+    border-radius: 5px;
+}
+
+.alert.success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert.danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+img {
+    max-width: 100%;
+    height: 300px;
+    margin: 20px 0;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#role {
+    width: 100%;
+    padding: 10px;
+    margin: 10px -10px;
+    border: 1px solid #ccc;
+}
+
+/* Table Styling - Scoped Changes (Does not affect other parts of page) */
+
+/* Scrollable container for the table */
+.table-container {
+    max-height: 500px; /* Limit the height */
+    overflow-y: auto; /* Vertical scrolling */
+    margin-top: 20px;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Scrollbar appearance */
+.table-container::-webkit-scrollbar {
+    width: 8px; /* Scrollbar width */
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background-color: #4bc0c0; /* Scrollbar color */
+    border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Track color */
+    border-radius: 4px;
+}
+
+.table-container th, .table-container td {
+    font-size: 16px;
+    padding: 12px;
+}
+
+/* Table layout styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Table header */
+th, td {
+    padding: 12px 16px;
+    text-align: left;
+    border: 1px solid #ddd;
+    color: #333;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+th {
+    background-color: #4bc0c0; /* Header background color */
+    color: white;
+    font-weight: bold;
+}
+
+/* Row background alternation */
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Even row background */
+}
+
+tr:nth-child(odd) {
+    background-color: #ffffff; /* Odd row background */
+}
+
+/* Row hover effect */
+tr:hover {
+    background-color: #e7f1f1; /* Light teal on hover */
+}
+
+/* Button Container Styles */
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Button Styles */
+.tab-button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: #4bc0c0; /* Teal color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for buttons */
+.tab-button:hover {
+    background-color: #36a7a5; /* Darker teal on hover */
+}
+
+/* Active/Selected Button Styles */
+.tab-button.selected {
+    background-color: #36a7a5; /* Darker teal */
+    font-weight: bold;
+}
+
+/* Content Section Styles */
+.content-section {
+    display: none;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Show active section */
+.content-section.active {
+    display: block;
+}
+
+/* Navbar Styles - Improved alignment for navbar-left and navbar-right */
+.navbar-left a {
+    color: white;
+    padding: 10px;
+    font-size: 20px;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+/* Additional styles for Button Container and Tab Buttons */
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: #4bc0c0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for buttons */
+.tab-button:hover {
+    background-color: #36a7a5; /* Darker teal on hover */
+}
+
+/* Active/Selected Button Styles */
+.tab-button.selected {
+    background-color: #36a7a5; /* Darker teal */
+    font-weight: bold;
+}
+
+/* Content Section Styles - Better Layout */
+.content-section {
+    display: none;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Show active section */
+.content-section.active {
+    display: block;
+}
+
+/* Table Styling - Container for Scrollable Table */
+.table-container {
+    max-height: 500px;
+    overflow-y: auto;
+    margin-top: 20px;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Scrollbar appearance for the table container */
+.table-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background-color: #4bc0c0;
+    border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+/* Table Styling - Enhancements for better readability */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 12px 16px;
+    text-align: left;
+    border: 1px solid #ddd;
+    color: #333;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+th {
+    background-color: #4bc0c0; /* Header background color */
+    color: white;
+    font-weight: bold;
+}
+
+/* Alternating row colors for better readability */
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+/* Row hover effect */
+tr:hover {
+    background-color: #e7f1f1;
+}
+
+/* Improved Chart Container */
+canvas {
+    width: 100%;
+    height: 400px;
+    margin: 20px 0;
+}
+
+/* Alerts - Success and Danger styles */
+.alert {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid transparent;
+    border-radius: 5px;
+}
+
+.alert.success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert.danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+/* Responsive Design for smaller screens */
+@media (max-width: 768px) {
+    /* Stack Navbar links vertically on small screens */
+    .navbar-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    /* Adjust the Table Container for smaller screens */
+    .table-container {
+        max-height: 400px; /* Less height */
+    }
+
+    /* Adjust font size and paddings for smaller screens */
+    .table-container th, .table-container td {
+        font-size: 12px;
+        padding: 10px 8px;
+    }
+
+    /* Stack Tab Buttons vertically on smaller screens */
+    .button-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .tab-button {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    .man_container {
+        padding: 10px;
+        padding-left: 100px;
+        margin: 10px;
+        /* margin-left: 300px; */
+    }
+
+    .username {
+        font-size: 18px;
+        margin-right: 10px;
+    }
+}
+
+/* General Styles for Dataset Overview */
+.content-section {
+    padding: 20px;
+    margin: 20px 0;
+    background-color: #f1f9f8; /* Soft grayish teal */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styles */
+.content-section h2 {
+    font-size: 2rem;
+    color: #4bc0c0;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* Paragraphs and General Text */
+.content-section p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #34495e;
+}
+
+/* Styling for the Dataset Overview List */
+.dataset-overview ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.dataset-overview li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+.dataset-overview li:last-child {
+    border-bottom: none;
+}
+
+.dataset-overview li strong {
+    color: #4bc0c0;
+    font-weight: bold;
+}
+
+/* Adding Hover Effect on List Items */
+.dataset-overview li:hover {
+    background-color: #ecf0f1;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Media Query for Responsive Design */
+@media screen and (max-width: 768px) {
+    .content-section {
+        padding: 15px;
+    }
+
+    .content-section h2 {
+        font-size: 1.8rem;
+    }
+
+    .dataset-overview ul {
+        font-size: 1rem;
+    }
+}
+
+/* Sidebar styling */
+.sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 15px;
+    text-align: center;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.sidebar ul li a.selected {
+    background-color: #1abc9c;
+}
+
+.sidebar ul li a:hover {
+    background-color: #16a085;
+}
+
+/* Basic reset */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.man_container {
+    display: flex;
+    flex-direction: row;
+    margin: 20px;
+    /* margin-left: 300px; */
+    transition: margin-left 0.3s ease;
+}
+
+/* Sidebar styling */
+.sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 20px;
+    transition: width 0.3s ease; /* Smooth transition for width */
+    z-index: 1000; /* Make sure the sidebar is always on top */
+}
+
+.sidebar.collapsed {
+    width: 60px; /* Collapsed width */
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar ul li {
+    padding: 15px;
+    text-align: center;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.sidebar ul li a.selected {
+    background-color: #1abc9c;
+}
+
+.sidebar ul li a:hover {
+    background-color: #16a085;
+}
+
+/* Collapsed sidebar links text should be small */
+.sidebar.collapsed ul li a {
+    font-size: 14px;
+}
+
+/* Toggle button */
+.toggle-btn {
+    background-color: #34495e;
+    color: white;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    z-index: 1100; /* Above sidebar content */
+}
+
+.content-area {
+    margin-left: 270px; /* Adjust this based on the sidebar width */
+    /* padding: 20px; */
+    flex-grow: 1;
+    transition: margin-left 0.3s ease; /* Smooth transition for content area */
+}
+
+.content-area.expanded {
+    margin-left: 60px; /* Shrink the content area when the sidebar is collapsed */
+}
+
+.content-section {
+    display: none;
+}
+
+.content-section:first-of-type {
+    display: block;
+}
+
+.username {
+    font-weight: bold;
+}
+
+.navbar {
+    background-color: #34495e;
+    padding: 10px;
+    color: white;
+}
+
+.navbar .navbar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .navbar-left {
+    font-size: 18px;
+}
+
+.navbar .navbar-right .button {
+    color: white;
+    background-color: #e74c3c;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.navbar .navbar-right .button:hover {
+    background-color: #c0392b;
+}
+
+/* Sidebar container */
+.sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #34495e;
+    transition: all 0.3s ease;
+    overflow-x: hidden;
+    padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Sidebar collapsed state */
+.sidebar.collapsed {
+    width: 70px; /* Shrink width when collapsed */
+}
+
+/* Sidebar links */
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    padding: 10px 20px;
+    padding-right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* Icons */
+.sidebar ul li a i {
+    font-size: 20px; /* Set icon size */
+    margin-right: 10px; /* Default margin */
+    transition: margin-right 0.3s ease; /* Smooth transition */
+}
+
+/* When the sidebar is collapsed, set margin-right to 0px */
+.sidebar.collapsed ul li a i {
+    margin-right: 0px; /* No margin when collapsed */
+}
+
+/* Text (visible only in expanded sidebar) */
+.sidebar-text {
+    display: inline-block;
+}
+
+/* Hide text when sidebar is collapsed */
+.sidebar.collapsed .sidebar-text {
+    display: none;
+}
+
+/* Adjust content area when sidebar is collapsed */
+.content-area.expanded {
+    margin-left: 10px; /* Adjust content margin when sidebar is collapsed */
+}
+
+/* Content area when sidebar is expanded */
+.content-area {
+    margin-left: 10px;
+    /*padding-top: 30px; /* Add padding to move content down */
+}
+
+#man_container.expanded {
+    margin-left: 130px; /* Adjust margin-left when sidebar is collapsed */
+}
+
+/* man_container area when sidebar is expanded */
+#man_container {
+    margin-left: 250px; /* Default margin-left when sidebar is expanded */
+    padding-top: 30px;  /* Add padding to move content down */
+}
+
+#predictButton {
+    background-color: #16a085; /* Your theme color */
+    color: white; /* Text color */
+    border: none; /* Remove border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 12px 20px; /* Padding inside the button (vertical and horizontal) */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Mouse pointer shows a hand when hovering */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+/* On hover, change the background color */
+#predictButton:hover {
+    background-color: #1abc9c; /* A slightly lighter shade of your theme color */
+}
+
+/* On focus (when the button is clicked) */
+#predictButton:focus {
+    outline: none; /* Remove outline */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Slight shadow for focus */
+}
+
+/* Target only the specific list with the class 'custom-list' */
+.custom-list {
+    list-style-type: none; /* Remove default bullet points */
+    padding-left: 50px; /* Remove padding on the left */
+    font-family: 'Arial', sans-serif; /* Choose a modern font */
+    font-size: 16px; /* Adjust font size */
+    color: #333333; /* Set a dark color for text */
+}
+
+/* Styling for each list item in the custom list */
+.custom-list li {
+    position: relative; /* Position the custom bullet */
+    padding-left: 25px; /* Add space for the custom bullet */
+    margin-bottom: 12px; /* Space between items */
+}
+
+/* Create a custom bullet using the theme color */
+.custom-list li::before {
+    content: ''; /* Add content before each list item */
+    position: absolute; /* Position the bullet */
+    left: 0; /* Align it to the left of the list item */
+    top: 50%; /* Vertically center the bullet */
+    transform: translateY(-50%); /* Adjust for perfect vertical centering */
+    width: 10px; /* Set the size of the bullet */
+    height: 10px; /* Set the size of the bullet */
+    background-color: #4bc0c0; /* Use your theme color */
+    border-radius: 50%; /* Make the bullet circular */
+}
+
+/* Button Styling */
+.send-notification-btn {
+    padding: 10px 20px;  /* Adjust padding for button size */
+    background-color: #16a085;  /* Your custom color */
+    color: white;  /* Text color */
+    border: none;  /* Remove border */
+    border-radius: 5px;  /* Rounded corners */
+    font-size: 16px;  /* Text size */
+    cursor: pointer;  /* Change cursor to a pointer */
+    transition: background-color 0.3s ease;  /* Smooth color transition on hover */
+}
+
+/* Hover effect */
+.send-notification-btn:hover {
+    background-color: #1abc9c;  /* Slightly lighter shade on hover */
+}
+
+/* Optional: Add focus effect for accessibility */
+.send-notification-btn:focus {
+    outline: none;  /* Remove default outline */
+    box-shadow: 0 0 5px 2px rgba(22, 160, 133, 0.5);  /* Green shadow effect */
+}

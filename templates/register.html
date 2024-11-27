@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Register</h1>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                {% for category, message in messages %}
+                    <li class="alert {{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            {{ form.username.label }} {{ form.username(size=32) }}<br>  <!-- Add username field -->
+            {{ form.email.label }} {{ form.email(size=32) }}<br>
+            {{ form.password.label }} {{ form.password(size=32) }}<br>
+            {{ form.confirm_password.label }} {{ form.confirm_password(size=32) }}<br>
+            {{ form.role.label }}
+            <select name="role" id="role">
+                <option value="" disabled selected>Select your role</option>
+                {% for choice in form.role.choices %}
+                    <option value="{{ choice[0] }}">{{ choice[1] }}</option>
+                {% endfor %}
+            </select><br>
+            {{ form.submit() }}
+        </form>
+        <p>Already have an account? <a href="{{ url_for('login') }}">Login here.</a></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,806 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fleet Manager Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-content">
+            <div class="navbar-left">
+                <span class="username">Welcome, {{ current_user.username }}</span>
+            </div>
+            <div class="navbar-right">
+                <a href="{{ url_for('logout') }}" class="button">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="man_container" class="content-area">
+        <h1>Fleet Manager Dashboard</h1>
+        <img src="{{ url_for('static', filename='manager.jpg') }}" alt="Fleet Manager">
+
+        <!-- Sidebar -->
+        <div id="sidebar" class="sidebar">
+            <button class="toggle-btn" onclick="toggleSidebar()">&#9776;</button>
+            <ul>
+                <li><a href="javascript:void(0)" class="tab-link selected" onclick="showContent('introContent')">
+                    <i class="fas fa-bolt"></i> <!-- Icon for Introduction -->
+                    <span class="sidebar-text">Introduction to EV</span></a>
+                </li>
+                <li><a href="javascript:void(0)" class="tab-link" onclick="showContent('datasetContent')">
+                    <i class="fas fa-database"></i> <!-- Icon for Dataset -->
+                    <span class="sidebar-text">Dataset</span></a>
+                </li>
+                <li><a href="javascript:void(0)" class="tab-link" onclick="showContent('dataDistributionContent')">
+                    <i class="fas fa-chart-pie"></i> <!-- Icon for Distribution -->
+                    <span class="sidebar-text">Distribution</span></a>
+                </li>
+                <li><a href="javascript:void(0)" class="tab-link" onclick="showContent('relationshipContent')">
+                    <i class="fas fa-link"></i> <!-- Icon for Relationship -->
+                    <span class="sidebar-text">Relationship</span></a>
+                </li>
+                <li><a href="javascript:void(0)" class="tab-link" onclick="showContent('statusCountContent')">
+                    <i class="fas fa-clipboard-list"></i> <!-- Icon for Status Count -->
+                    <span class="sidebar-text">Status Count</span></a>
+                </li>
+                <li><a href="javascript:void(0)" class="tab-link" onclick="showContent('maintenanceContent')">
+                    <i class="fas fa-wrench"></i> <!-- Icon for Maintenance -->
+                    <span class="sidebar-text">Maintenance</span></a>
+                </li>
+                <li><a href="javascript:void(0)" class="tab-link" onclick="showContent('predictionContent')">
+                    <i class="fas fa-car-side"></i> <!-- Icon for Car Range Prediction -->
+                    <span class="sidebar-text">Prediction</span></a>
+                </li>
+                <li><a href="javascript:void(0)" class="tab-link" onclick="showContent('overspeedingDriversContent')">
+                    <i class="fas fa-tachometer-alt"></i> <!-- Icon for speedometer or overspeeding -->
+                    <span class="sidebar-text">Driver Behaviour</span></a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Content Sections -->
+        <div id="content-area" class="content-area">
+            <!-- Introduction to EV -->
+            <div id="introContent" class="content-section">
+                <h2>Introduction to Electric Vehicles (EVs)</h2>
+                <p>Electric vehicles (EVs) are automobiles that are powered by electric motors and batteries, rather than internal combustion engines. EVs offer several advantages over traditional gasoline-powered vehicles, including:</p>
+                <ul class="custom-list">
+                    <li>Reduced greenhouse gas emissions</li>
+                    <li>Lower operating costs</li>
+                    <li>Quieter operation</li>
+                    <li>Instant torque and acceleration</li>
+                    <li>Reduced dependence on fossil fuels</li>
+                </ul>                        
+                <p>As the automotive industry shifts towards sustainable transportation solutions, EVs are becoming increasingly popular among consumers and fleet operators. This dashboard provides valuable insights into electric vehicle data, including performance metrics, maintenance costs, and operational status.</p>
+                
+                <h2>Dataset Overview</h2>
+                <p>This dataset contains detailed information about various electric vehicles (EVs). The data includes a range of parameters related to the vehicle's performance, specifications, and other key features. Below is an explanation of the dataset's variables:</p>
+                
+                <div class="dataset-overview">
+                    <ul>
+                        <li><strong>Range (km)</strong>: The maximum distance the vehicle can travel on a single charge, in kilometers.</li>
+                        <li><strong>Battery Level (%)</strong>: The current charge level of the vehicle’s battery, represented as a percentage.</li>
+                        <li><strong>Latitude (°)</strong>: The geographical latitude of the vehicle’s location.</li>
+                        <li><strong>Longitude (°)</strong>: The geographical longitude of the vehicle’s location.</li>
+                        <li><strong>Speed (km/h)</strong>: The vehicle’s current speed in kilometers per hour.</li>
+                        <li><strong>Maintenance Cost ($)</strong>: The cost incurred for maintaining the vehicle, in U.S. dollars or relevant currency.</li>
+                        <li><strong>Charging Cost ($)</strong>: The cost of charging the vehicle, in U.S. dollars or relevant currency.</li>
+                        <li><strong>Pin Code</strong>: A unique identifier or geographical location code for the vehicle's location.</li>
+                        <li><strong>Working Condition</strong>: The operational status of the vehicle, where <strong>1</strong> means the vehicle is working, and <strong>0</strong> means it's not (possibly under repair).</li>
+                        <li><strong>Charging Status</strong>: The charging status of the vehicle, where <strong>1</strong> means the vehicle is discharging (in use), and <strong>0</strong> means it is charging.</li>
+                        <li><strong>Energy Consumed (kWh)</strong>: The total energy the vehicle has used, measured in kilowatt-hours (kWh).</li>
+                        <li><strong>Fast Charge Speed (kW)</strong>: The rate at which the vehicle can fast charge, measured in kilowatts.</li>
+                        <li><strong>status</strong>: This could refer to the overall status of the vehicle (e.g., operational status, condition).</li>
+                        <li><strong>Date</strong>: The date when the data was recorded.</li>
+                        <li><strong>dvr</strong>: Likely refers to the driver or an identifier related to the driver.</li>
+                        <li><strong>Make</strong>: The manufacturer or brand of the vehicle (e.g., Tesla, BMW).</li>
+                        <li><strong>mgr</strong>: The manager or supervisor responsible for the vehicle or fleet.</li>
+                        <li><strong>Acceleration 0 - 100 km/h</strong>: The time in seconds it takes for the vehicle to accelerate from 0 to 100 km/h.</li>
+                        <li><strong>Top Speed</strong>: The maximum speed the vehicle can achieve, in kilometers per hour (km/h).</li>
+                        <li><strong>ER</strong>: Likely refers to "Electric Range," the maximum distance a vehicle can travel on electric power alone.</li>
+                        <li><strong>Total Power</strong>: The total power output of the vehicle’s motor, measured in kilowatts (kW).</li>
+                        <li><strong>Total Torque</strong>: The total torque produced by the vehicle’s motor, measured in newton-meters (Nm).</li>
+                        <li><strong>Drive</strong>: The type of drive system, such as all-wheel drive (AWD), front-wheel drive (FWD), or rear-wheel drive (RWD).</li>
+                        <li><strong>BC</strong>: Could refer to a specific model or version of the vehicle or some code used internally.</li>
+                        <li><strong>Length</strong>: The vehicle’s length in millimeters.</li>
+                        <li><strong>Width</strong>: The vehicle’s width in millimeters.</li>
+                        <li><strong>Height</strong>: The vehicle’s height in millimeters.</li>
+                        <li><strong>Wheelbase</strong>: The distance between the front and rear axles of the vehicle.</li>
+                        <li><strong>Gross Vehicle Weight (GVWR)</strong>: The total weight of the vehicle, including passengers and cargo, measured in kilograms.</li>
+                        <li><strong>Max. Payload</strong>: The maximum weight the vehicle can carry, including passengers and cargo, measured in kilograms.</li>
+                        <li><strong>Cargo Volume</strong>: The volume of storage space in the vehicle, measured in cubic meters.</li>
+                        <li><strong>Seats</strong>: The number of seats in the vehicle.</li>
+                        <li><strong>km</strong>: Likely refers to the total kilometers traveled or driven by the vehicle.</li>
+                    </ul>
+                </div>                
+                
+                <p>The dataset provides a comprehensive set of features that can be used to analyze electric vehicle performance, efficiency, and other key metrics. This data is valuable for studying EV adoption trends, comparing various vehicle specifications, and understanding maintenance and operational costs.</p>
+            </div>
+        </div>
+
+        <!-- Display Vehicle Data -->
+        <div id="datasetContent" class="content-section">
+            <h2>Vehicle Data</h2>
+        
+            {% if vehicles %}
+            <div class="table-container">
+                <table id="vehicleTable">
+                    <thead>
+                        <tr>
+                            {% for column in vehicles[0].keys() %}
+                                <th>{{ column }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for vehicle in vehicles %}
+                        <tr>
+                            {% for value in vehicle.values() %}
+                                <td>{{ value }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p>No vehicle data available.</p>
+            {% endif %}
+        </div>        
+
+        <!-- Data Distribution Section -->
+        <div id="dataDistributionContent" class="content-section">
+            <h2>Data Distribution</h2>
+
+            <div class="parameter-selection">
+                <label for="xParameter"><strong>Parameter:</strong></label>
+                <select id="xParameter" onchange="updateHistogramChart()">
+                    <option value="" disabled selected>Select Parameter</option>
+                    <option value="Range (km)">Range (km)</option>
+                    <option value="Battery Level (%)">Battery Level (%)</option>
+                    <option value="Make">Make</option>
+                    <option value="mgr">Manager</option>
+                    <option value="dvr">Driver</option>
+                </select>
+            </div>
+
+            <canvas id="histogramChart"></canvas>
+
+            <script>
+                var vehicleData = {{ vehicles | tojson }};  // Pass the vehicle data from Flask to JS
+                var histogramChart;
+            
+                function updateHistogramChart() {
+                    var xParameter = document.getElementById('xParameter').value;
+            
+                    if (!xParameter) return;  // If no parameter is selected, exit the function
+            
+                    var counts = {};
+            
+                    // Handle 'Range (km)' differently by binning the values
+                    if (xParameter === 'Range (km)') {
+                        var bins = [0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500];  // Define bin edges
+                        var labels = ['0-50 km', '51-100 km', '101-150 km', '151-200 km', '201-250 km', '251-300 km', '301-350 km', '351-400 km', '401-450 km', '451-500 km'];
+            
+                        vehicleData.forEach(function(item) {
+                            var rangeValue = item[xParameter];
+                            if (rangeValue !== undefined && rangeValue !== null) {
+                                // Find the appropriate bin for the current range value
+                                for (var i = 0; i < bins.length - 1; i++) {
+                                    if (rangeValue >= bins[i] && rangeValue < bins[i + 1]) {
+                                        var binLabel = labels[i];
+                                        counts[binLabel] = (counts[binLabel] || 0) + 1;  // Increment count for the appropriate bin
+                                        break;
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    // Handle 'Battery Level (%)' differently by binning the values
+                    else if (xParameter === 'Battery Level (%)') {
+                        var batteryBins = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];  // Define bin edges for battery level
+                        var batteryLabels = ['0-10%', '11-20%', '21-30%', '31-40%', '41-50%', '51-60%', '61-70%', '71-80%', '81-90%', '91-100%'];
+            
+                        vehicleData.forEach(function(item) {
+                            var batteryLevel = item[xParameter];
+                            if (batteryLevel !== undefined && batteryLevel !== null) {
+                                // Find the appropriate bin for the current battery level
+                                for (var i = 0; i < batteryBins.length - 1; i++) {
+                                    if (batteryLevel >= batteryBins[i] && batteryLevel < batteryBins[i + 1]) {
+                                        var binLabel = batteryLabels[i];
+                                        counts[binLabel] = (counts[binLabel] || 0) + 1;  // Increment count for the appropriate bin
+                                        break;
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        // Handle other fields normally (no binning)
+                        vehicleData.forEach(function(item) {
+                            var value = item[xParameter];
+                            if (value !== undefined && value !== null) {
+                                counts[value] = (counts[value] || 0) + 1;  // Count occurrences of each unique value
+                            }
+                        });
+                    }
+            
+                    // Sort the bin labels (for Range and Battery Level) or other labels alphabetically/numerically
+                    var xAxisLabels = Object.keys(counts).sort();
+                    var yAxisData = xAxisLabels.map(function(label) {
+                        return counts[label];  // Map each label to its corresponding count
+                    });
+            
+                    if (histogramChart) {
+                        histogramChart.destroy();  // Destroy the previous chart if it exists
+                    }
+            
+                    // Create a new chart
+                    var ctx = document.getElementById('histogramChart').getContext('2d');
+                    histogramChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: xAxisLabels,
+                            datasets: [{
+                                label: 'Count of ' + xParameter,
+                                data: yAxisData,
+                                backgroundColor: 'rgba(75, 192, 192, 0.6)',  // Set the chart color
+                                borderColor: 'rgba(75, 192, 192, 1)',      // Set border color
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,   // Ensure the y-axis starts at 0
+                                    title: {
+                                        display: true,
+                                        text: 'Count'
+                                    }
+                                },
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: xParameter
+                                    },
+                                    ticks: {
+                                        maxRotation: 45,   // Rotate labels if necessary
+                                        minRotation: 0
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            
+                window.onload = function() {
+                    updateHistogramChart();  // Initialize the chart when the page loads
+                };
+            </script>            
+        </div>
+
+        <!-- Relationship Section -->
+        <div id="relationshipContent" class="content-section">
+            <h2>Relationship Between Variables</h2>
+
+            <div class="parameter-selection">
+                <label for="xAxis"><strong>X-axis Parameter:</strong></label>
+                <select id="xAxis" onchange="updateChart()">
+                    <option value="" disabled selected>Select X-axis Parameter</option>
+                    <option value="Top Speed">Top Speed</option>
+                    <option value="Battery Level (%)">Battery Level (%)</option>
+                    <option value="Range (km)">Range (km)</option>
+                    <option value="Energy Consumed (kWh)">Energy Consumed (kWh)</option>
+                    <option value="Speed (km/h)">Speed (km/h)</option>
+                    <option value="Acceleration 0 - 100 km/h">Acceleration 0 - 100 km/h</option>
+                    <option value="Total Power">Total Power</option>
+                    <option value="Total Torque">Total Torque</option>
+                </select>
+                <br>
+                <label for="yAxis"><strong>Y-axis Parameter:</strong></label>
+                <select id="yAxis" onchange="updateChart()">
+                    <option value="" disabled selected>Select Y-axis Parameter</option>
+                    <option value="Top Speed">Top Speed</option>
+                    <option value="Battery Level (%)">Battery Level (%)</option>
+                    <option value="Range (km)">Range (km)</option>
+                    <option value="Energy Consumed (kWh)">Energy Consumed (kWh)</option>
+                    <option value="Speed (km/h)">Speed (km/h)</option>
+                    <option value="Acceleration 0 - 100 km/h">Acceleration 0 - 100 km/h</option>
+                    <option value="Total Power">Total Power</option>
+                    <option value="Total Torque">Total Torque</option>
+                </select>
+            </div>
+
+            <canvas id="relationshipChart"></canvas>
+
+            <script>
+                var vehicleData = {{ vehicles | tojson }};  // This gets the vehicle data from Flask
+                var relationshipChart;
+
+                function updateChart() {
+                    var xAxis = document.getElementById('xAxis').value;
+                    var yAxis = document.getElementById('yAxis').value;
+
+                    if (xAxis && yAxis) {
+                        var chartData = vehicleData.map(vehicle => ({
+                            x: vehicle[xAxis],
+                            y: vehicle[yAxis]
+                        }));
+
+                        if (relationshipChart) {
+                            relationshipChart.destroy();
+                        }
+
+                        var ctx = document.getElementById('relationshipChart').getContext('2d');
+                        relationshipChart = new Chart(ctx, {
+                            type: 'bubble',
+                            data: {
+                                datasets: [{
+                                    label: `${xAxis} vs ${yAxis}`,
+                                    data: chartData,
+                                    backgroundColor: 'rgba(75, 192, 192, 0.6)',  // Teal color for the bubble chart
+                                    borderColor: '#4bc0c0',  // Border color
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                scales: {
+                                    x: {
+                                        type: 'linear',  // x-axis is linear for numerical data
+                                        position: 'bottom'
+                                    },
+                                    y: {
+                                        beginAtZero: true,  // Start the y-axis at zero
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+
+                window.onload = function() {
+                    updateChart();  // Initialize chart on page load
+                };
+            </script>
+        </div>
+
+        <!-- Status Count Section -->
+        <div id="statusCountContent" class="content-section">
+            <h2>Status Count</h2>
+
+            <div class="parameter-selection">
+                <label for="statusType"><strong>Status Type:</strong></label>
+                <select id="statusType" onchange="updateStatusChart()">
+                    <option value="" disabled selected>Select Status Type</option>
+                    <option value="working">Working Condition</option>
+                    <option value="charging">Charging Status</option>
+                </select>
+            </div>
+
+            <canvas id="statusCountChart"></canvas>
+
+            <script>
+                var statusCountsWorking = {{ status_counts_working | tojson }};
+                var statusCountsCharging = {{ status_counts_charging | tojson }};
+                var statusCountChart;
+
+                function updateStatusChart() {
+                    var statusType = document.getElementById('statusType').value;
+
+                    var data, labels, statusLabels;
+
+                    if (statusType === 'working') {
+                        data = Object.values(statusCountsWorking);
+                        labels = Object.keys(statusCountsWorking);
+                        statusLabels = {
+                            '1': 'Working',
+                            '0': 'Not Working'
+                        };
+                    } else if (statusType === 'charging') {
+                        data = Object.values(statusCountsCharging);
+                        labels = Object.keys(statusCountsCharging);
+                        statusLabels = {
+                            '1': 'Discharging',
+                            '0': 'Charging'
+                        };
+                    }
+
+                    labels = labels.map(function(label) {
+                        return statusLabels[label];
+                    });
+
+                    if (statusCountChart) {
+                        statusCountChart.destroy();
+                    }
+
+                    var ctx = document.getElementById('statusCountChart').getContext('2d');
+                    statusCountChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: statusType === 'working' ? 'Working Condition' : 'Charging Status',
+                                data: data,
+                                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                }
+
+                window.onload = function() {
+                    updateStatusChart();
+                };
+            </script>
+        </div>
+
+        <!-- Maintenance Section -->
+        <div id="maintenanceContent" class="content-section">
+            <h2>Maintenance</h2>
+
+            <!-- Dropdown for selecting maintenance type -->
+            <div class="parameter-selection">
+                <label for="maintenanceOption"><strong>Maintenance View:</strong></label>
+                <select id="maintenanceOption" onchange="updateMaintenanceChart()">
+                    <option value="" disabled selected>Select Maintenance View</option>
+                    <option value="costByManufacturer">Maintenance Cost by Manufacturer</option>
+                    <option value="costByMonth">Maintenance Cost by Month</option>
+                </select>
+            </div>
+            
+            <!-- Maintenance Cost by Manufacturer -->
+            <canvas id="maintenanceByManufacturerChart"></canvas>
+
+            <!-- Maintenance Cost by Month -->
+            <canvas id="maintenanceByMonthChart"></canvas>
+
+            <script>
+                // Function to update and render the appropriate Maintenance chart
+                function updateMaintenanceChart() {
+                    var selectedOption = document.getElementById('maintenanceOption').value;
+
+                    // Hide both charts initially
+                    document.getElementById('maintenanceByManufacturerChart').style.display = 'none';
+                    document.getElementById('maintenanceByMonthChart').style.display = 'none';
+
+                    // Show the selected chart
+                    if (selectedOption === 'costByManufacturer') {
+                        document.getElementById('maintenanceByManufacturerChart').style.display = 'block';
+                        renderMaintenanceByManufacturerChart();
+                    } else if (selectedOption === 'costByMonth') {
+                        document.getElementById('maintenanceByMonthChart').style.display = 'block';
+                        renderMaintenanceByMonthChart();
+                    }
+                }
+
+                // Function to render the Maintenance Cost by Manufacturer chart
+                function renderMaintenanceByManufacturerChart() {
+                    var ctx = document.getElementById('maintenanceByManufacturerChart').getContext('2d');
+                    
+                    // Get the maintenance data for manufacturers passed from Flask
+                    var maintenanceByManufacturer = {{ maintenance_by_manufacturer | tojson }};
+                    
+                    var manufacturers = Object.keys(maintenanceByManufacturer);
+                    var costs = Object.values(maintenanceByManufacturer);
+
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: manufacturers,  // Labels: Manufacturer names
+                            datasets: [{
+                                label: 'Maintenance Cost by Manufacturer',
+                                data: costs,  // Maintenance costs
+                                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                }
+
+                // Function to render the Maintenance Cost by Month chart
+                function renderMaintenanceByMonthChart() {
+                    var ctx = document.getElementById('maintenanceByMonthChart').getContext('2d');
+
+                    // Get the maintenance data by month passed from Flask
+                    var maintenanceByMonth = {{ maintenance_by_month | tojson }};
+                    
+                    var months = Object.keys(maintenanceByMonth);  // Array of months (strings, e.g., "2023-07")
+                    var costs = Object.values(maintenanceByMonth);  // Array of costs
+
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: months,  // Labels: Months in format "YYYY-MM"
+                            datasets: [{
+                                label: 'Maintenance Cost by Month',
+                                data: costs,  // Maintenance costs
+                                fill: false,
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                tension: 0.1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                }
+
+                // Initial load of the Maintenance section
+                window.onload = function() {
+                    // Trigger the chart rendering function based on the default selected option
+                    updateMaintenanceChart();
+                };
+            </script>
+        </div>
+
+        <!-- Prediction Section -->
+        <div id="predictionContent" class="content-section">
+            <h2>Car Range Prediction</h2>
+            <!-- Link with image of Electric Car -->
+            <img src="/static/electric-car-new.png" alt="Electric Car" style="width: 100%; max-width: 500px; border-radius: 8px;">
+
+            <!-- Prediction Form -->
+            <form id="prediction-form" method="POST">
+                <div class="parameter-selection">
+                    <label for="batteryLevel" style="margin-bottom: -10px; display: block;"><strong>Battery Level (%):</strong></label><br>
+                    <input type="number" id="batteryLevel" name="batteryLevel" min="0" max="100" required style="height: 30px; width: 250px; font-size: 14px; margin-bottom: 10px; display: block; border-radius: 4px;" />
+                </div>
+
+                <div class="parameter-selection">
+                    <label for="carModel"><strong>Car Model:</strong></label>
+                    <select id="carModel" name="carModel" required>
+                        <option value="" disabled selected>Select a car model</option>
+                        <option value="1">Tesla1</option>
+                        <option value="2">Tesla2</option>
+                        <option value="3">BMW</option>
+                        <option value="4">Volkswagen</option>
+                        <option value="5">Polestar</option>
+                    </select>
+                </div>  
+                <br>
+                <button type="submit" id="predictButton">Predict Range</button>
+            </form>
+
+            <!-- Display the prediction result -->
+            <div id="prediction-result">
+                {% if prediction_text %}
+                    <h3>{{ prediction_text }}</h3>
+                {% endif %}
+            </div>
+
+            <script>
+                // Prevent form submission and handle it with AJAX
+                document.getElementById('prediction-form').addEventListener('submit', function(e) {
+                    e.preventDefault();  // Prevent the form from submitting in the traditional way
+    
+                    var carModel = document.getElementById('carModel').value;
+                    var batteryLevel = document.getElementById('batteryLevel').value;
+    
+                    // Make sure both fields are filled out
+                    if (carModel && batteryLevel) {
+                        var formData = new FormData();
+                        formData.append('carModel', carModel);
+                        formData.append('batteryLevel', batteryLevel);
+    
+                        // Send data via AJAX to the backend
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('POST', '/fleet_manager_page', true);
+                        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    
+                        xhr.onload = function() {
+                            if (xhr.status === 200) {
+                                try {
+                                    var response = JSON.parse(xhr.responseText);  // Parse the JSON response
+                                    // Update the prediction result div with the new prediction text
+                                    document.getElementById('prediction-result').innerHTML = '<h3>' + response.prediction_text + '</h3>';
+                                } catch (e) {
+                                    // Handle error in case of invalid JSON
+                                    document.getElementById('prediction-result').innerHTML = "Error: Invalid response from the server.";
+                                }
+                            } else {
+                                // Handle error if server response is not successful
+                                document.getElementById('prediction-result').innerHTML = "There was an error processing your request. Please try again.";
+                            }
+                        };
+    
+                        xhr.send(formData);
+                    } else {
+                        // Error handling if form fields are empty
+                        document.getElementById('prediction-result').innerHTML = "Please fill in both the car model and battery level.";
+                    }
+                });
+            </script>
+
+        </div>
+
+        <!-- Overspeeding Drivers Section -->
+        <div id="overspeedingDriversContent" class="content-section">
+            <h2>Overspeeding Drivers</h2>
+    
+            <!-- Table for Overspeeding Drivers -->
+            <div id="overspeedingDriversTableSection">
+                <table id="overspeedingDriversTable" style="width:100%; border-collapse: collapse;">
+                    <thead>
+                        <tr>
+                            <th>Driver Name</th>
+                            <th>Speed (km/h)</th>
+                            <th>Action</th>  <!-- Column for sending notification button -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if overspeeding_driver_info %}
+                            {% for driver in overspeeding_driver_info %}
+                                <tr>
+                                    <td>{{ driver.dvr }}</td>
+                                    <td>{{ driver['Speed (km/h)'] }} km/h</td>
+                                    <td>
+                                        <!-- Send Notification Button -->
+                                        <button onclick="sendNotification('{{ driver.dvr }}')" class="send-notification-btn">Send Notification</button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="3">No overspeeding drivers found.</td>  <!-- Adjusted column span to 3 -->
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+    
+            <!-- Modal for Notification Confirmation -->
+            <div class="modal fade" id="sendNotificationModal" tabindex="-1" aria-labelledby="sendNotificationModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="sendNotificationModalLabel">Send Notification</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to send a notification to <span id="driverNameModal"></span>?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="confirmSendBtn">Send Notification</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Modal for Success Message -->
+            <div class="modal fade" id="notificationSentModal" tabindex="-1" aria-labelledby="notificationSentModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="notificationSentModalLabel">Notification Sent</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Notification has been successfully sent to <span id="driverNameSent"></span>.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    
+        <!-- JavaScript for Bootstrap Modal -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    
+        <script>
+            // Function to show the confirmation modal
+            function sendNotification(driverName) {
+                // Set the driver name in the modal
+                document.getElementById("driverNameModal").textContent = driverName;
+                
+                // Show the confirmation modal
+                var myModal = new bootstrap.Modal(document.getElementById('sendNotificationModal'));
+                myModal.show();
+    
+                // Handle the confirmation of sending notification
+                document.getElementById("confirmSendBtn").onclick = function() {
+                    // Send a POST request to notify the driver
+                    fetch('/send_notification', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ driver: driverName })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Hide the confirmation modal and show success modal
+                        myModal.hide();
+                        document.getElementById("driverNameSent").textContent = driverName;
+                        var successModal = new bootstrap.Modal(document.getElementById('notificationSentModal'));
+                        successModal.show();
+                    })
+                    .catch(error => {
+                        console.error('Error sending notification:', error);
+                    });
+                };
+            }
+        </script>          
+
+    </div>
+    <script>
+        function showContent(contentId) {
+            // Hide all sections
+            var sections = document.querySelectorAll('.content-section');
+            sections.forEach(function(section) {
+                section.style.display = 'none';
+            });
+
+            // Remove 'selected' class from all menu links
+            var links = document.querySelectorAll('.tab-link');
+            links.forEach(function(link) {
+                link.classList.remove('selected');
+            });
+
+            // Show the selected content
+            document.getElementById(contentId).style.display = 'block';
+
+            // Add 'selected' class to the clicked link
+            var selectedLink = document.querySelector(`[onclick="showContent('${contentId}')"]`);
+            selectedLink.classList.add('selected');
+        }
+
+        // Initial load to show 'Introduction to EV'
+        window.onload = function() {
+            showContent('introContent');
+        };
+
+        // Toggle the sidebar and adjust content
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            var contentArea = document.getElementById('content-area');
+            var manContainer = document.getElementById('man_container');
+
+            // Toggle the collapsed class for sidebar
+            sidebar.classList.toggle('collapsed');
+
+            // Toggle the expanded class for content area
+            contentArea.classList.toggle('expanded');
+
+            // Toggle the expanded class for man container (this will move it accordingly)
+            manContainer.classList.toggle('expanded');
+        }
+    </script>
+
+</body>
+</html>
