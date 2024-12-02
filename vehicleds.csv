@@ -1,0 +1,11 @@
+id,dvr,Make,mgr,Acceleration 0 - 100 km/h,Top Speed,ER,Total Power,Total Torque,Drive,BC,Length,Width,Height,Wheelbase,Gross Vehicle Weight (GVWR),Max. Payload,Cargo Volume,Seats
+1,deepak,Tesla1,Mark,4.4,233,485,366,493,AWD,82,4694,1849,1443,2875,2232,388,561,5
+2,dinesh,Tesla2,vettal,3.3,261,460,377,660,AWD,82,4694,1849,1443,2875,2232,388,561,5
+3,varun,BMW,sainz,5.7,190,470,250,430,Rear,83.9,4783,1852,1448,2856,2605,555,470,5
+4,chandu,Volkswagen,john,7.9,160,450,150,310,Rear,82,4261,1809,1568,2771,2300,447,385,5
+5,mahendra,Polestar,mathew,7.4,160,425,170,330,Front,78,4607,1800,1479,2735,2490,496,405,5
+1,shwetha,Tesla1,Mark,4.4,233,485,366,493,AWD,82,4694,1849,1443,2875,2232,388,561,5
+2,praveen,Tesla2,vettal,3.3,261,460,377,660,AWD,82,4694,1849,1443,2875,2232,388,561,5
+3,shruthi,BMW,sainz,5.7,190,470,250,430,Rear,83.9,4783,1852,1448,2856,2605,555,470,5
+4,dhoni,Volkswagen,john,7.9,160,450,150,310,Rear,82,4261,1809,1568,2771,2300,447,385,5
+5,kohli,Polestar,mathew,7.4,160,425,170,330,Front,78,4607,1800,1479,2735,2490,496,405,5
